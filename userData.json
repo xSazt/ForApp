@@ -1,0 +1,66 @@
+{
+    "juandg000003@gmail.com": {
+        "widgetSetup": [
+            "nextAct",
+            ""
+        ],
+        "Financiero": {
+            "divisa": "",
+            "presupuesto_mensual": 0,
+            "gastos": {}
+        },
+        "Tiempo": {
+            "programacion_semanal": {
+                "lunes": {
+                    "03:00PM": "chao"
+                },
+                "martes": {
+                    "03:33PM": "Almuerzo"
+                },
+                "miercoles": {
+                    "08:30AM": "Desayuno"
+                },
+                "jueves": {},
+                "viernes": {},
+                "sabado": {},
+                "domingo": {}
+            },
+            "otras_programaciones": [
+                {
+                    "fecha": "02/06/2026",
+                    "hora": "05:00PM",
+                    "desc": "Viaje"
+                }
+            ]
+        }
+    },
+    "rdaghmario@gmail.com": {
+        "widgetSetup": [
+            "nextAct",
+            ""
+        ],
+        "Financiero": {
+            "divisa": "",
+            "presupuesto_mensual": 0,
+            "gastos": {}
+        },
+        "Tiempo": {
+            "programacion_semanal": {
+                "lunes": {},
+                "martes": {},
+                "miercoles": {},
+                "jueves": {},
+                "viernes": {},
+                "sabado": {},
+                "domingo": {}
+            },
+            "otras_programaciones": [
+                {
+                    "fecha": "02/06/2026",
+                    "hora": "06:00PM",
+                    "desc": "Viaje"
+                }
+            ]
+        }
+    }
+}
