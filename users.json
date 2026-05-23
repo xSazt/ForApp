@@ -12,5 +12,12 @@
         "nombre": "",
         "direccion": "",
         "universidad": ""
+    },
+    "esotilin@gmail.com": {
+        "password": "esotilin",
+        "telefono": "3",
+        "nombre": "tilin",
+        "direccion": "hoy",
+        "universidad": "cuc"
     }
 }

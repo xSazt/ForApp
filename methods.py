@@ -103,3 +103,20 @@ class ScheduleManagement:
         self.userTimeData[self.email]["Tiempo"]["otras_programaciones"] = lista_filtrada
         with open("userData.json",mode="w",encoding="utf-8") as rawUserData:
             json.dump(self.userTimeData,rawUserData, indent=4)
+
+    def get_all_tasks(self):
+        tasks=self.userTimeData[self.email]["Tiempo"]
+        weeklyTasks=[]
+        otherTasks=[]
+        for day in tasks["programacion_semanal"]:
+            if tasks["programacion_semanal"][day]:
+                for hour,desc in tasks["programacion_semanal"][day].items():
+                    if hour[5:]=="PM":
+                        hour=str(int(hour[:2])+12)+hour[2:]
+                    weeklyTasks.append({"dia":day,"hora":hour[:-2],"desc":desc})
+        if tasks["otras_programaciones"]:
+            for task in tasks["otras_programaciones"]:
+                if task["hora"][5:]=="PM":
+                    task["hora"]=str(int(task["hora"][:2])+12)+task["hora"][2:]
+                otherTasks.append({"dia":task["fecha"],"hora":task["hora"][:-2],"desc":task["desc"]})
+        return [weeklyTasks,otherTasks]

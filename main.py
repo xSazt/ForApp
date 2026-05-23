@@ -9,6 +9,9 @@ import numpy as np
 import methods
 from InterfaceStrings import Interface
 
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
 def main():
     console=Console()
     loggedStatus=False
@@ -38,9 +41,12 @@ def main():
     
         with open("users.json",mode="r",encoding="utf-8") as rawUsers:
             users=json.load(rawUsers)
+        with open("userData.json",mode="r",encoding="utf-8") as rawUserData:
+            userData=json.load(rawUserData)
 
-            widget1=Panel("widget1",expand=False)
-            widget2=Panel("widget2",expand=False)
+
+            widget1=Widgets(userData[loggedEmail]["widgetSetup"][0],loggedEmail).get_widget()
+            widget2=Widgets(userData[loggedEmail]["widgetSetup"][1],loggedEmail).get_widget()
 
             widgetColumn=Group("",widget1,"",widget2)
 
@@ -233,12 +239,83 @@ def ScheduleSequence(console, email):
     elif userOption == "3":
         return False
 
+class Widgets:
+    def __init__(self,widgetType,email):
+        self.widgetType=widgetType
+        self.email=email
+    
+    def get_widget(self):
+        if self.widgetType == "nextAct":
+            return self.nextAct()
+        else:
+            return Panel("Widget no disponible",expand=False)
 
+    def nextAct(self):
+        layout=Table(show_lines=False,show_header=False)
+        layout.add_row("[magenta]Proxima actividad[/magenta]")
+        
+        horario=methods.ScheduleManagement(self.email)
 
+        tasklist=horario.get_all_tasks()
+        allNextTasks=[]
+        now=datetime.now(ZoneInfo("America/Bogota"))
+        monthday=int(now.strftime("%d"))
+        month=int(now.strftime("%m"))
+        year=int(now.strftime("%Y"))
+        monthlydays=[31,29,30,31,30,31,31,30,31,30,31 if year%4==0 else 28,31,30,31,30,31,31,30,31,30,31]
+        for task in tasklist[0]:
+            if task["dia"]=="lunes":
+                task["dia"] = 0
+            elif task["dia"]=="martes":
+                task["dia"] = 1
+            elif task["dia"]=="miercoles":
+                task["dia"] = 2
+            elif task["dia"]=="jueves":
+                task["dia"] = 3
+            elif task["dia"]=="viernes":
+                task["dia"] = 4
+            elif task["dia"]=="sabado":
+                task["dia"] = 5
+            elif task["dia"]=="domingo":
+                task["dia"] = 6
+
+        for task in tasklist[0]:
+            taskTime=int(str(task["dia"]) + "".join(task["hora"].split(":")))
+            taskDay=int(task["dia"])
+            currentTime=int(str(now.weekday())+now.strftime("%H%M"))
+            if currentTime>=taskTime:
+                dmes=monthday+(6-now.weekday())+taskDay
+            else:
+                dmes=monthday+(taskDay-now.weekday())
+            if dmes>monthlydays[month-1]:
+                dmes=dmes-monthlydays[month-1]
+                month+=1
+                if month>12:        
+                    month=1
+                    year+=1
+
+            allData=[str(year),str(month),str(dmes),str(task["hora"].split(":")[0]),str(task["hora"].split(":")[1])]
+            index=0
+            for data in allData:
+                if len(str(data))==1:
+                    allData[index]="0"+str(data)
+                index+=1
+            allNextTasks.append({"code":"".join(allData),"desc":task["desc"]})
+
+        for task in tasklist[1]:
+            fecha=task["dia"].split("/")
+            hora=task["hora"].split(":")
+            allData=[str(fecha[2]),str(fecha[1]),str(fecha[0]),str(hora[0]),str(hora[1])]
+            index=0
+
+            allNextTasks.append({"code":"".join(allData),"desc":task["desc"]})
+
+        rawNextAct=min(allNextTasks,key=lambda x: x["code"])
+        layout.add_row(f"[cyan]{rawNextAct['code'][:4]}-{rawNextAct['code'][4:6]}-{rawNextAct['code'][6:8]} {rawNextAct['code'][8:10]}:{rawNextAct['code'][10:]}[/cyan] - {rawNextAct['desc']}")
+        return layout
 
 
 
 
 main()
-
 
