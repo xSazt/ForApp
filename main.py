@@ -1,5 +1,3 @@
-# Hola
-
 from rich.console import Console, Group
 from rich.panel import Panel
 from rich.table import Table
@@ -311,7 +309,9 @@ class Widgets:
             index=0
 
             allNextTasks.append({"code":"".join(allData),"desc":task["desc"]})
-
+        if not allNextTasks:
+            layout.add_row("[cyan]No hay actividades programadas[/cyan]")
+            return layout
         rawNextAct=min(allNextTasks,key=lambda x: x["code"])
         layout.add_row(f"[cyan]{rawNextAct['code'][:4]}-{rawNextAct['code'][4:6]}-{rawNextAct['code'][6:8]} {rawNextAct['code'][8:10]}:{rawNextAct['code'][10:]}[/cyan] - {rawNextAct['desc']}")
         return layout

@@ -26,15 +26,18 @@
                     "02:00PM": "Almuerzo"
                 },
                 "sabado": {},
-                "domingo": {
-                    "09:00AM": "Mercado"
-                }
+                "domingo": {}
             },
             "otras_programaciones": [
                 {
                     "fecha": "02/06/2026",
                     "hora": "05:00PM",
                     "desc": "Viaje"
+                },
+                {
+                    "fecha": "25/05/2026",
+                    "hora": "02:00PM",
+                    "desc": "Parcial de calculo"
                 }
             ]
         }
@@ -97,6 +100,29 @@
                     "desc": "Paja grupal"
                 }
             ]
+        }
+    },
+    "pene@gmail.com": {
+        "widgetSetup": [
+            "nextAct",
+            ""
+        ],
+        "Financiero": {
+            "divisa": "",
+            "presupuesto_mensual": 0,
+            "gastos": {}
+        },
+        "Tiempo": {
+            "programacion_semanal": {
+                "lunes": {},
+                "martes": {},
+                "miercoles": {},
+                "jueves": {},
+                "viernes": {},
+                "sabado": {},
+                "domingo": {}
+            },
+            "otras_programaciones": []
         }
     }
 }

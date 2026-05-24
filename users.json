@@ -19,5 +19,12 @@
         "nombre": "tilin",
         "direccion": "hoy",
         "universidad": "cuc"
+    },
+    "pene@gmail.com": {
+        "password": "1234567a",
+        "telefono": "",
+        "nombre": "",
+        "direccion": "",
+        "universidad": ""
     }
 }
